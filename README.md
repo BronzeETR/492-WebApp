@@ -1,24 +1,14 @@
-# workout_tracker
+Fitness-Diet Tracking App
+############################
 
-## Project setup
-```
-npm install
-```
+Currently we are able to receive and store user emails and passwords with utilizing SupaBase.
+This also allows us to change the state of the app based on whether or not a user is logged in.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+############################
+Current focus Task:
 
-### Compiles and minifies for production
-```
-npm run build
-```
+- The first Screen available upon opening the URL needs to be the log in screen 
+  which will then lead to the register screen if the user has not registered. 
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- All additional screens can be created in the views folder.
+  There are a few skeleton pages in this folder
