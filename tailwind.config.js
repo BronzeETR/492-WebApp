@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         // I'm thinking we'll stick with the blue from the mockup.
 
+        // Text Color
+        "at-dark-blue": "#188a94",
+
         // Temp color for header
         "at-lighter-blue": "#C1F3F7",
 

@@ -6,7 +6,7 @@
 export default {
   name: "restrictions",
   setup() {
-
+      
     return {};
   },
 };
