@@ -1,25 +1,24 @@
 <template>
-  <header class="bg-at-sky-blue text-white">
-    <nav class="container py-5 px-4 flex flex-col gap-4 items-center sm:flex-row">
-      <div class="flex items-center gap-x-4">
-        <img class="w-14" src="../assets/images/dumbbell-light.png" alt="">
-        <h1 class="text-lg">Name Pending</h1>
-      </div>
-      <ul class="flex flex-1 justify-end gap-x-10">
-        <router-link class="cursor-pointer" :to="{name: 'Home' }">Home</router-link>
-        <router-link v-if="!user" class="cursor-pointer" :to="{name: 'Login' }">Login</router-link>
-        <li v-if='user' @click="logout" class="cursor-pointer">Logout</li>
-      </ul>
-    </nav>
 
+<div class="sidebar ">
     
-  </header>
-  
+    
+  <div class="flex items-center gap-x-4">
+    <img class="w-14" src="../assets/images/dumbbell-light.png" alt="">
+    <h1 class="text-lg">Name Pending</h1>
+  </div>
+    <br>
+    <router-link class="link" :to="{name: '' }">Calandar</router-link>
+    <router-link class="link" :to="{name: 'Home' }">Home</router-link>
+    <router-link v-if="!user" class="link" :to="{name: 'Login' }">Login</router-link>
+    <li v-if='user' @click="logout" class="link">Logout</li>
+</div>  
 
 
 </template>
 
 <script>
+
 import store from '../store/index';
 import { computed } from 'vue';
 import {supabase} from '../supabase/init';
@@ -39,3 +38,74 @@ export default {
   },
 };
 </script>
+<style>
+:root {
+  --sidebar-bg-color: #49D8E3;
+  --sidebar-item-hover: #fdfdfd;
+  --sidebar-item-active: #276749;
+}
+</style>
+
+<style scoped>
+.sidebar {
+  color: white;
+  background-color: var(--sidebar-bg-color);
+  width: 200px;
+  float: left;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding: 0.5em;
+
+  transition: 0.3s ease;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h1 {
+  height: 2.5em;
+}
+
+.collapse-icon {
+  position: absolute;
+  bottom: 0;
+  padding: 0.75em;
+
+  color: rgba(255, 255, 255, 0.7);
+
+  transition: 0.2s linear;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: 0.2s linear;
+}
+.link {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+  position: relative;
+  font-weight: 400;
+  user-select: none;
+
+  margin: 0.1em 0;
+  padding: 1em;
+  border-radius: 0.25em;
+  height: 1.5em;
+
+  color: white;
+  text-decoration: none;
+}
+.link:hover {
+  background-color: var(--sidebar-item-hover);
+  color:var(--sidebar-bg-color)
+}
+
+.link.active {
+  background-color: var(--sidebar-item-active);
+}
+</style>
