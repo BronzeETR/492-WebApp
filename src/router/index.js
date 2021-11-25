@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Metrics from "../views/UserMetrics.vue";
+import Create from "../views/Create.vue";
 const routes = [
   {
     path: "/",
@@ -23,6 +24,11 @@ const routes = [
     path: "/usermetrics",
     name: "UserMetrics",
     component: Metrics
+  },
+  {
+    path: "/create",
+    name: "Create",
+    component: Create
   },
 ];
 

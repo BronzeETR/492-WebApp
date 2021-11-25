@@ -47,12 +47,18 @@
         </div>
         <div class="flex-1 space-y-1">
           <label for="timeframe" class="mb-1 text-md text-at-dark-blue">Weeks or Months?</label>
-          <input list="time-options" id="time" name="time" class="p-2 text-gray-500 focus:outline-none" />
-
-          <datalist id="time-options">
-            <option value="Weeks"/>
-            <option value="Months"/>
-          </datalist>
+          <br>
+          <select
+            id="time"
+            class="p-2 text-gray-500 focus:outline-none"
+            required
+            @change="time"
+            v-model="time"
+          >
+            
+            <option value="Weeks">Weeks</option>
+            <option value="Months">Months</option>
+          </select>
 
         </div>
       </div>
@@ -81,10 +87,19 @@
         <label for="feet" class="mb-1 text-sm text-at-dark-blue">In.</label>     
       </div>
 
-      <div class="flex flex-col mb-4">
-        <label for="activity-level" class="mb- text-md text-at-dark-blue">Exercise Frequency</label>
-          <select id="activity-lvl" name="activity-lvl">
-            <option value="lvl"></option>
+
+      <div class="flex flex-col">
+          <label for="activity-level" class="mb-1 text-md text-at-dark-blue"
+            >Level of Activity?</label
+          >
+          <select
+            id="activity-level"
+            class="p-2 text-gray-500 focus:outline-none"
+            required
+            @change="activity-level"
+            v-model="activity"
+          >
+            
             <option value="lvlzero"> Exercise Less Than 1 Time a Week</option>
             <option value="lvlone">Exercise 1-3 Times a Week</option>
             <option value="lvltwo">Exercise 3-5 Times a Week</option>
