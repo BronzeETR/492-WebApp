@@ -204,6 +204,7 @@
 import { ref } from "vue";
 import { uid } from "uid";
 import { supabase } from "../supabase/init";
+
 export default {
   name: "create",
   setup() {
@@ -256,8 +257,10 @@ export default {
     // Create workout
     const createWorkout = async () => {
       try {
+        const userEmail = supabase.auth.user().email
         const { error } = await supabase.from("workouts").insert([
           {
+            email: userEmail,
             workoutName: workoutName.value,
             workoutType: workoutType.value,
             exercises: exercises.value,

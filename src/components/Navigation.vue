@@ -33,6 +33,7 @@ export default {
     const logout = async() => {
       await supabase.auth.signOut();
       router.push({name: "Home"})
+      location.reload()
     }
     return {logout, user};
   },
@@ -41,7 +42,7 @@ export default {
 <style>
 :root {
   --sidebar-bg-color: #49D8E3;
-  --sidebar-item-hover: #fdfdfd;
+  --sidebar-item-hover: #188a94;
   --sidebar-item-active: #276749;
 }
 </style>
@@ -102,7 +103,7 @@ export default {
 }
 .link:hover {
   background-color: var(--sidebar-item-hover);
-  color:var(--sidebar-bg-color)
+ 
 }
 
 .link.active {
