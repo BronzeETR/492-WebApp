@@ -7,7 +7,7 @@ import Register from "../views/Register.vue";
 import Create from "../views/Create.vue";
 import ViewWorkout from "../views/ViewWorkout.vue";
 import Metrics from "../views/UserMetrics.vue";
-
+import CalorieRestrictions from "../views/CalorieRestrictions.vue"
 
 
 const routes = [
@@ -63,6 +63,15 @@ const routes = [
     component: ViewWorkout,
     meta: {
       title: "View Workout",
+      auth: true,
+    },
+  },
+  {
+    path: "/calorie-restrictions",
+    name: "restrictions",
+    component: CalorieRestrictions,
+    meta: {
+      title: "Calorie Restrictions",
       auth: true,
     },
   },
