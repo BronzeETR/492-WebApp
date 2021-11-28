@@ -10,6 +10,9 @@
     <br>
     <router-link class="link" :to="{name: '' }">Calandar</router-link>
     <router-link class="link" :to="{name: 'Home' }">Home</router-link>
+    <router-link v-if="user" class="link" :to="{name: 'Create' }">Plan Workouts</router-link>
+    <router-link v-if="user" class="link" :to="{name: 'UserMetrics' }">Your Metrics</router-link>
+    <router-link v-if="user" class="link" :to="{name: 'restrictions' }">Calorie Restrictions</router-link>
     <router-link v-if="!user" class="link" :to="{name: 'Login' }">Login</router-link>
     <li v-if='user' @click="logout" class="link">Logout</li>
 </div>  
@@ -93,8 +96,8 @@ export default {
   font-weight: 400;
   user-select: none;
 
-  margin: 0.1em 0;
-  padding: 1em;
+  margin: 0.05em 0;
+  padding: 2em;
   border-radius: 0.25em;
   height: 1.5em;
 

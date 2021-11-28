@@ -22,11 +22,11 @@
       class="flex flex-col items-center p-4 rounded-md shadow-md 
       bg-light-grey relative"
     >
-      <p class="text-lg text-at-dark-blue mb-2">To achive your weight goal within __ __
-        you'll need to lose __ lbs a week
-        you're going to want to maintaing a roughly ___ calorie __
-        based on you're current activity level
-        You'll need to consume less than ____ calories/day
+      <p class="text-lg text-at-dark-blue mb-2">To achive your weight goal within <span id="time" class="font-bold"></span> <span id="type" class="font-bold"></span>
+        you'll need to lose <span id='poundsPW' class="font-bold"></span> lbs a week.
+        You're going to want to be maintaing a roughly <span id="defic" class="font-bold"></span> calorie deficit
+        based on you're current activity level.
+        You'll need to consume less than <span id="restriction" class="font-bold"></span> calories/day
       </p>
       <b class= "text-lg text-at-dark-blue mb-2">
         Healthly weight loss or gain takes time.
@@ -63,6 +63,7 @@ export default {
     let heightInCentimeters = 0
     let weightInKilo = 0
 
+
     // Data needed for calculations
     const data = ref(null);
     const dataLoaded = ref(null);
@@ -77,6 +78,8 @@ export default {
         data.value = Metrics[0];
         dataLoaded.value = true;
         console.log(data.value);
+        calculateRestrictions()
+        displayResults()
       } catch (error) {
         errorMsg.value = error.message;
         setTimeout(() => {
@@ -114,7 +117,7 @@ export default {
       }
       maintain = (10*weightInKilo + 6.25 * heightInCentimeters - 5*data.value.age + sexAug) * activityAug
       
-      if (data.value.timeframeType === "months"){
+      if (data.value.timeframeType === "Months"){
         weeks = parseInt(data.value.timeframeLength) * 4
       }else{
         weeks = parseInt(data.value.timeframeLength)
@@ -123,18 +126,21 @@ export default {
       poundsToLose = parseInt(data.value.currentWeight) - parseInt(data.value.targetWeight)
       poundsPW = poundsToLose / weeks
       dailyDef = maintain - (500 * poundsPW)
-      restriction = maintain - dailyDef
-
-
-
+      restriction = maintain - (maintain - (500 * poundsPW))
       
     }
-    calculateRestrictions()
-
+    
+    const displayResults = async () =>{
+      document.getElementById('poundsPW').innerHTML = poundsPW.toFixed(2)
+      document.getElementById('time').innerHTML = data.value.timeframeLength
+      document.getElementById('type').innerHTML = data.value.timeframeType
+      document.getElementById('defic').innerHTML = restriction.toFixed(1)
+      document.getElementById('restriction').innerHTML = dailyDef.toFixed(1)
+    }
     const toHome = async () => {
       router.push({ name: "Home" });
     } 
-    return {poundsPW,poundsToLose,dailyDef,restriction,toHome};
+    return {toHome};
   },
 };
 </script>
