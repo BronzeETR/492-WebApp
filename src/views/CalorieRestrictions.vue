@@ -34,7 +34,7 @@
       </b>
 
       <button
-        type="submit"
+        @click="toHome"
         class="mt-6 py-2 px-6 text-lg text-white text-white bg-at-sky-blue duration-200 border-solid
       border-2 border-transparent hover:border-at-light-green hover:bg-white
       hover:text-at-light-green"
@@ -47,11 +47,94 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import { supabase } from "../supabase/init";
+import { useRouter } from "vue-router";
 export default {
   name: "restrictions",
   setup() {
-    
-    return {};
+    // Outputs
+    const router = useRouter()
+    let poundsPW = 0
+    let dailyDef = 0
+    let restriction = 0
+    let poundsToLose = 0
+    let weeks = 0
+    let heightInCentimeters = 0
+    let weightInKilo = 0
+
+    // Data needed for calculations
+    const data = ref(null);
+    const dataLoaded = ref(null);
+    const errorMsg = ref(null);
+    // get imformation from supabase
+    const getData = async () => {
+      try {
+        const { data: Metrics, error } = await supabase
+          .from("Metrics")
+          .select("*")
+        if (error) throw error;
+        data.value = Metrics[0];
+        dataLoaded.value = true;
+        console.log(data.value);
+      } catch (error) {
+        errorMsg.value = error.message;
+        setTimeout(() => {
+          errorMsg.value = false;
+        }, 5000);
+      }
+    };
+    getData()
+
+    const calculateRestrictions = async () =>{
+      heightInCentimeters = (30.48*(parseInt(data.value.feet)) + 2.54*(parseInt(data.value.inches)))
+      weightInKilo = parseInt(data.value.currentWeight)/2.205
+      let activityAug = 1
+      let sexAug = 1
+      let maintain = 0
+
+      if (data.value.activityLevel === "lvlzero"){
+        activityAug = 1.200
+      }
+      else if (data.value.activityLevel === "lvlone"){
+        activityAug = 1.375
+      }
+      else if (data.value.activityLevel === "lvltwo"){
+        activityAug = 1.550
+      }
+      else{
+        activityAug = 1.725
+      }
+
+      if (data.value.sex === "male"){
+        sexAug = 5
+      }
+      else{
+        sexAug = -161
+      }
+      maintain = (10*weightInKilo + 6.25 * heightInCentimeters - 5*data.value.age + sexAug) * activityAug
+      
+      if (data.value.timeframeType === "months"){
+        weeks = parseInt(data.value.timeframeLength) * 4
+      }else{
+        weeks = parseInt(data.value.timeframeLength)
+      }
+
+      poundsToLose = parseInt(data.value.currentWeight) - parseInt(data.value.targetWeight)
+      poundsPW = poundsToLose / weeks
+      dailyDef = maintain - (500 * poundsPW)
+      restriction = maintain - dailyDef
+
+
+
+      
+    }
+    calculateRestrictions()
+
+    const toHome = async () => {
+      router.push({ name: "Home" });
+    } 
+    return {poundsPW,poundsToLose,dailyDef,restriction,toHome};
   },
 };
 </script>
