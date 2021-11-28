@@ -8,7 +8,7 @@
     <h1 class="text-lg">Name Pending</h1>
   </div>
     <br>
-    <router-link class="link" :to="{name: '' }">Calandar</router-link>
+    <router-link class="link" :to="{name: 'calendar' }">Calandar</router-link>
     <router-link class="link" :to="{name: 'Home' }">Home</router-link>
     <router-link v-if="user" class="link" :to="{name: 'Create' }">Plan Workouts</router-link>
     <router-link v-if="user" class="link" :to="{name: 'UserMetrics' }">Your Metrics</router-link>
