@@ -7,17 +7,18 @@
                     v-model="date"
                     :config="config"
                     class="form-control"
+                    inline="true"
                     placeholder="Select date"
                     name="date"/>
                 <div class="input-group-append">
                     <button class="btn btn-default" type="button" title="Toggle" data-toggle>
                         <i class="fa fa-calendar">
-                            <span aria-hidden="false" class="sr-only">Toggle</span>
+                            <span aria-hidden="true" class="sr-only">Toggle</span>
                         </i>
                     </button>
                     <button class="btn btn-default" type="button" title="Clear" data-clear>
                         <i class="fa fa-times">
-                            <span aria-hidden="false" class="sr-only">Clear</span>
+                            <span aria-hidden="true" class="sr-only">Clear</span>
                         </i>
                     </button>
                 </div>
@@ -52,8 +53,7 @@
                     wrap: true, // set wrap to true only when using 'input-group'
                     altFormat: 'M j, Y',
                     altInput: true,
-                    dateFormat: 'Y-m-d',
-                    inline: true
+                    dateFormat: 'Y-m-d'
                     //          
                 },
             }
