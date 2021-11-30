@@ -3,9 +3,8 @@
 <div class="sidebar ">
     
     
-  <div class="flex items-center gap-x-4">
-    <img class="w-14" src="../assets/images/dumbbell-light.png" alt="">
-    <h1 class="text-lg">Name Pending</h1>
+  <div class="flex items-center gap-x-4 gap-y-4">
+    <h1 class="text-lg gap-y-8">Fitness Planner</h1>
   </div>
     <br>
     <router-link v-if="user" class="link" :to="{name: 'Calendar' }">Calendar</router-link>
@@ -21,7 +20,7 @@
 </template>
 
 <script>
-
+//<img class="w-14" src="../assets/images/dumbbell-light.png" alt=""> 
 import store from '../store/index';
 import { computed } from 'vue';
 import {supabase} from '../supabase/init';

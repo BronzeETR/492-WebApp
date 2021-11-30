@@ -131,11 +131,11 @@
       @click="createMetrics"
         type="submit"
         class="mt-6 py-2 px-6 rounded-sm self-start text-sm
-      text-white bg-at-sky-blue duration-200 border-solid
-      border-2 border-transparent hover:border-at-light-green hover:bg-white
-      hover:text-at-light-green"
+      text-white bg-at-dark-blue duration-200 border-solid
+      border-2 border-transparent hover:border-at-dark-blue hover:bg-white
+      hover:text-at-dark-blue"
       >
-        Next
+        Submit
       </button>
     </form>
   </div>

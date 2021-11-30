@@ -9,7 +9,7 @@ import ViewWorkout from "../views/ViewWorkout.vue";
 import Metrics from "../views/UserMetrics.vue";
 import CalorieRestrictions from "../views/CalorieRestrictions.vue"
 import Calendar from "../views/Calendar.vue"
-
+// import CheckMetrics from "../views/CheckMetrics.vue"
 
 const routes = [
 
@@ -36,10 +36,11 @@ const routes = [
         name: "UserMetrics",
         component: Metrics,
         meta: {
-            title: "Login",
-            auth: false
+            title: "Metrics",
+            auth: true
         },
     },
+ 
     {
         path: "/register",
         name: "Register",
