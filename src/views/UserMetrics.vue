@@ -302,7 +302,7 @@ export default {
         setTimeout(() => {
           statusMsg.value = false;
         }, 5000);
-        location.reload()
+        window.location.reload()
       } catch (error) {
         errorMsg.value = `Error: ${error.message}`;
         setTimeout(() => {

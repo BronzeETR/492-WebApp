@@ -4,7 +4,7 @@
     
     
   <div class="flex items-center gap-x-4 gap-y-4">
-    <h1 class="text-lg gap-y-8">Fitness Planner</h1>
+    <h1 class="text-3xl gap-y-8">Fitness Planner</h1>
   </div>
     <br>
     <router-link v-if="user" class="link" :to="{name: 'Calendar' }">Calendar</router-link>
@@ -35,7 +35,7 @@ export default {
     const logout = async() => {
       await supabase.auth.signOut();
       router.push({name: "Home"})
-      location.reload()
+      window.location.reload()
     }
     return {logout, user};
   },
