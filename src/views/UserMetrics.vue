@@ -5,12 +5,62 @@
       <p class="text-red-500">{{ errorMsg }}</p>
     </div>
 
-    <!-- Login -->
+
+    <div
+      v-if="notEmpty"
+      class="flex flex-col p-4 rounded-md shadow-md 
+      bg-light-grey relative"
+    >
+    <h1 class="text-3xl text-at-dark-blue mb-4">Your Metrics</h1>
+    <div class="text-at-dark-blue text-xl"> Your current weight: 
+            <b class="text-at-dark-blue text-xl"> {{ data.currentWeight }} </b>
+    </div>
+
+    <div class="text-at-dark-blue text-xl"> Your target weight: 
+            <b class="text-at-dark-blue text-xl"> {{ data.targetWeight }} </b>
+    </div>
+
+    <div class="text-at-dark-blue text-xl"> Target timeframe: 
+            <b class="text-at-dark-blue text-xl"> {{ data.timeframeLenght }} {{data.timeframeType}} </b>
+    </div>
+    <div class="text-at-dark-blue text-xl"> Your Height: 
+            <b class="text-at-dark-blue text-xl"> {{ data.feet }} ft. {{data.inches}} in. </b>
+    </div>
+    <div class="text-at-dark-blue text-xl"> Your age: 
+            <b class="text-at-dark-blue text-xl"> {{ data.age }} </b>
+    </div>
+    <div class="text-at-dark-blue text-xl"> Your sex: 
+            <b class="text-at-dark-blue text-xl"> {{ data.sex }} </b>
+    </div>
+    <div class="text-at-dark-blue text-xl"> Your activity level: 
+            <div class="text-at-dark-blue text-xl">
+    </div>
+    <div class="text-at-dark-blue text-xl">
+      <b class="text-at-dark-blue text-xl">If you would like to update your information click
+        the button below and we will delete your previous information and allow you to re-enter it.
+      </b>
+    </div>
+    <button
+      @click="update"
+        class="mt-6 py-2 px-6 rounded-sm self-start text-lg
+      text-white bg-at-dark-blue duration-200 border-solid
+      border-2 border-transparent hover:border-at-dark-blue hover:bg-white
+      hover:text-at-dark-blue"
+      >
+        Update
+      </button>
+    </div>
+    </div>
+    <!-- Data Entry -->
     <form
+      v-if="isEmpty"
       @submit.prevent="login"
       class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg"
     >
-      <h1 class="text-3xl text-at-dark-blue mb-4">Your Metrics</h1>
+    <div v-if="statusMsg" class="mb-10 p-4 rounded-md bg-light-grey shadow-lg">
+      <p class="text-text-at-dark-blue text-lg">{{ statusMsg }}</p>
+    </div>
+      <h1 class="text-3xl text-at-dark-blue mb-4">Enter Your Metrics</h1>
 
       <div class="flex flex-col mb-2">
         <label for="weight" class="mb-1 text-md text-at-dark-blue">Current Weight</label>
@@ -161,15 +211,73 @@ export default {
     const sex = ref(null);
     const statusMsg = ref(null);
     const errorMsg = ref(null);
-    
+    const isEmpty = ref(null)
+    const notEmpty = ref(null)
+    const data = ref(null)
+    let activityAug = ""
 
     // Get Bio Metrics
+
+    const getData = async () => {
+      try {
+        const { data: Metrics, error } = await supabase
+          .from("Metrics")
+          .select("*")
+        if (error) throw error
+        data.value = Metrics[0];
+        console.log(data.value);
+        if (data.value == null){
+          isEmpty.value=true
+          
+        }else{
+          notEmpty.value = true
+        //   console.log('here')
+        //   if (data.value.activityLevel === "lvlzero"){
+        //     document.getElementById('bold').innerHTML = "Exercises less then once a week"
+        //   }
+        //   else if (data.value.activityLevel === "lvlone"){
+        //     document.getElementById('bold').innerHTML= "Exercises 1-3 times a week"
+        //   }
+        //   else if (data.value.activityLevel === "lvltwo"){
+        //     document.getElementById('bold').innerHTML = "Exercises 3-5 times a week"
+        //   }
+        //   else{
+        //     document.getElementById('bold').innerHTML = "Exercises 6-7 times a week"
+        // }
+      }
+      } catch (error) {
+        
+        errorMsg.value = error.message;
+        console.log(errorMsg.value)
+        setTimeout(() => {
+          errorMsg.value = false;
+        }, 5000);
+      }
+    };
+    getData()
+
+    const update = async () => {
+      isEmpty.value= true
+      notEmpty.value=false
+      try {
+        const { error } = await supabase
+          .from("Metrics")
+          .delete('*');
+        if (error) throw error;
+      } catch (error) {
+        errorMsg.value = `Error: ${error.message}`;
+        setTimeout(() => {
+          errorMsg.value = false;
+        }, 5000);
+      }
+    }
+
 
     const changeSex = async (event) => {
       userSex = event.target.value;
       
     }
-    // Create workout
+    // Create metrics
     const createMetrics = async () => {
       try {
         const userEmail = supabase.auth.user().email
@@ -194,6 +302,7 @@ export default {
         setTimeout(() => {
           statusMsg.value = false;
         }, 5000);
+        location.reload()
       } catch (error) {
         errorMsg.value = `Error: ${error.message}`;
         setTimeout(() => {
@@ -215,7 +324,12 @@ export default {
       errorMsg,
       timeframeType,
       createMetrics,
-      changeSex
+      changeSex,
+      isEmpty,
+      notEmpty,
+      data,
+      activityAug,
+      update
     };
   },
 };

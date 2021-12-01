@@ -26,7 +26,7 @@
         you'll need to lose <span id='poundsPW' class="font-bold"></span> lbs a week.
         You're going to want to be maintaing a roughly <span id="defic" class="font-bold"></span> calorie deficit
         based on you're current activity level.
-        You'll need to consume less than <span id="restriction" class="font-bold"></span> calories/day
+        You'll need to no more than <span id="restriction" class="font-bold"></span> calories/day
       </p>
       <b id='bold' class= "text-lg text-at-dark-blue mb-2">
         Healthly weight loss or gain takes time.
