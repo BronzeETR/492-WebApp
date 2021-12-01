@@ -35,7 +35,7 @@ export default {
     const logout = async() => {
       await supabase.auth.signOut();
       router.push({name: "Home"})
-      window.location.reload()
+      //window.location.href = window.location.href;
     }
     return {logout, user};
   },
