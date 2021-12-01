@@ -22,18 +22,19 @@
       class="flex flex-col items-center p-4 rounded-md shadow-md 
       bg-light-grey relative"
     >
-      <p class="text-lg text-at-dark-blue mb-2">To achive your weight goal within <span id="time" class="font-bold"></span> <span id="type" class="font-bold"></span>
+      <p id="display" class="text-lg text-at-dark-blue mb-2">To achive your weight goal within <span id="time" class="font-bold"></span> <span id="type" class="font-bold"></span>
         you'll need to lose <span id='poundsPW' class="font-bold"></span> lbs a week.
         You're going to want to be maintaing a roughly <span id="defic" class="font-bold"></span> calorie deficit
         based on you're current activity level.
         You'll need to consume less than <span id="restriction" class="font-bold"></span> calories/day
       </p>
-      <b class= "text-lg text-at-dark-blue mb-2">
+      <b id='bold' class= "text-lg text-at-dark-blue mb-2">
         Healthly weight loss or gain takes time.
         Be sure to prioritize your nutrition over calorie restrictions
       </b>
 
       <button
+        v-if="notEmpty"
         @click="toHome"
         class="mt-6 py-2 px-6 text-lg text-white text-white bg-at-dark-blue duration-200 border-solid
       border-2 border-transparent hover:border-at-dark-blue hover:bg-white
@@ -41,7 +42,22 @@
       >
         Get Started
       </button>
+
+      <button
+        v-if="isEmpty"
+        @click="toMetrics"
+        class="mt-6 py-2 px-6 text-lg text-white text-white bg-at-dark-blue duration-200 border-solid
+      border-2 border-transparent hover:border-at-dark-blue hover:bg-white
+      hover:text-at-dark-blue"
+      >
+        Enter Metrics!
+      </button>
     </div>
+   
+
+      
+    
+   
 
   </div>
 </template>
@@ -62,39 +78,52 @@ export default {
     let weeks = 0
     let heightInCentimeters = 0
     let weightInKilo = 0
+   
+    
 
 
     // Data needed for calculations
     const data = ref(null);
-    const dataLoaded = ref(null);
+    const notEmpty = ref(null)
     const errorMsg = ref(null);
+    const isEmpty = ref(null)
     // get imformation from supabase
     const getData = async () => {
       try {
         const { data: Metrics, error } = await supabase
           .from("Metrics")
           .select("*")
-        if (error) throw error;
+        if (error) throw error
         data.value = Metrics[0];
-        dataLoaded.value = true;
         console.log(data.value);
-        calculateRestrictions()
-        displayResults()
+        if (data.value == null){
+          isEmpty.value=true
+          document.getElementById('display').innerHTML ="It Looks like you haven't entered the metrics we need to calculate your restrictions."
+          document.getElementById('bold').innerHTML=""
+        }else{
+          notEmpty.value = true
+          calculateRestrictions()
+          displayResults()}
+        
       } catch (error) {
+        
         errorMsg.value = error.message;
+        console.log(errorMsg.value)
         setTimeout(() => {
           errorMsg.value = false;
         }, 5000);
       }
     };
     getData()
-
+    
     const calculateRestrictions = async () =>{
       heightInCentimeters = (30.48*(parseInt(data.value.feet)) + 2.54*(parseInt(data.value.inches)))
       weightInKilo = parseInt(data.value.currentWeight)/2.205
+    
       let activityAug = 1
       let sexAug = 1
       let maintain = 0
+
 
       if (data.value.activityLevel === "lvlzero"){
         activityAug = 1.200
@@ -139,8 +168,11 @@ export default {
     }
     const toHome = async () => {
       router.push({ name: "Home" });
-    } 
-    return {toHome};
+    }
+    const toMetrics = async () => {
+      router.push({ name: "UserMetrics" });
+    }  
+    return {toHome,notEmpty,toMetrics,isEmpty};
   },
 };
 </script>
