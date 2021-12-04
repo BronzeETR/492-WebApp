@@ -1,14 +1,12 @@
 Fitness-Diet Tracking App
 
 
-Currently we are able to receive and store user emails and passwords with utilizing SupaBase.
-This also allows us to change the state of the app based on whether or not a user is logged in.
+Main Code for this Application can be found in /src files and folders.
 
+* /components/Navigation.vue - Essentially the sidebar for our app and is present on all views
+* /router/index.js - Used to connect/load different views(pages) throughout the applications
+* /Views - .vue files that run backgroud scripts and displays for individual views/pages. Names of .vue files should correspond with the page it will     display
+* /App.vue is is the main page the application is built on. Holds basic user state information and all views within it's scope.
 
-Current focus Task:
-
-- The first Screen available upon opening the URL needs to be the log in screen 
-  which will then lead to the register screen if the user has not registered. 
-
-- All additional screens can be created in the views folder.
-  There are a few skeleton pages in this folder
+* /main.ja esentially starts up the app,router and calendar.
+ 
