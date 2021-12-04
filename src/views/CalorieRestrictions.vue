@@ -33,15 +33,29 @@
         Be sure to prioritize your nutrition over calorie restrictions
       </b>
 
+
+      <p v-if="notEmpty" id="recal" class="text-md text-at-dark-blue mb-2"> To recalculate your restrictions, update your metrics. </p>
+      <div class="space-x-9">
       <button
         v-if="notEmpty"
-        @click="toHome"
+        @click="toMetrics"
         class="mt-6 py-2 px-6 text-lg text-white text-white bg-at-dark-blue duration-200 border-solid
       border-2 border-transparent hover:border-at-dark-blue hover:bg-white
       hover:text-at-dark-blue"
       >
-        Get Started
+        To Your Metrics
       </button>
+      <button
+        v-if="notEmpty"
+        @click="toWorkouts"
+        class="mt-6 py-2 px-6 text-lg text-white text-white bg-at-dark-blue duration-200 border-solid
+      border-2 border-transparent hover:border-at-dark-blue hover:bg-white
+      hover:text-at-dark-blue"
+      >
+        Plan Workouts!
+      </button>
+      </div>
+      
 
       <button
         v-if="isEmpty"
@@ -100,6 +114,7 @@ export default {
           isEmpty.value=true
           document.getElementById('display').innerHTML ="It Looks like you haven't entered the metrics we need to calculate your restrictions."
           document.getElementById('bold').innerHTML=""
+          
         }else{
           notEmpty.value = true
           calculateRestrictions()
@@ -171,8 +186,11 @@ export default {
     }
     const toMetrics = async () => {
       router.push({ name: "UserMetrics" });
-    }  
-    return {toHome,notEmpty,toMetrics,isEmpty};
+    }
+    const toWorkouts = async () => {
+      router.push({ name: "Create" });
+    }   
+    return {toHome,notEmpty,toMetrics,isEmpty,toWorkouts};
   },
 };
 </script>
