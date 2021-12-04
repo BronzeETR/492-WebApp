@@ -21,7 +21,7 @@
     </div>
 
     <div class="text-at-dark-blue text-xl"> Target timeframe: 
-            <b class="text-at-dark-blue text-xl"> {{ data.timeframeLenght }} {{data.timeframeType}} </b>
+            <b class="text-at-dark-blue text-xl"> {{ data.timeframeLength }} {{data.timeframeType}} </b>
     </div>
     <div class="text-at-dark-blue text-xl"> Your Height: 
             <b class="text-at-dark-blue text-xl"> {{ data.feet }} ft. {{data.inches}} in. </b>
@@ -32,8 +32,9 @@
     <div class="text-at-dark-blue text-xl"> Your sex: 
             <b class="text-at-dark-blue text-xl"> {{ data.sex }} </b>
     </div>
-    <div class="text-at-dark-blue text-xl"> Your activity level: 
+    <div class="text-at-dark-blue text-xl"> Your activity level: <b>{{data.activityLevel}} a week</b>
             <div class="text-at-dark-blue text-xl">
+              <br>
     </div>
     <div class="text-at-dark-blue text-xl">
       <b class="text-at-dark-blue text-xl">If you would like to update your information click
@@ -61,7 +62,7 @@
       <p class="text-text-at-dark-blue text-lg">{{ statusMsg }}</p>
     </div>
       <h1 class="text-3xl text-at-dark-blue mb-4">Enter Your Metrics</h1>
-
+      <p class="mb-1 text-sm text-at-dark-blue">Calculations are done using the Harris-Benedict equation as a way to get your Basal Metobolic Rate to get a rough estimate of your maintance caloric requirements.</p>
       <div class="flex flex-col mb-2">
         <label for="weight" class="mb-1 text-md text-at-dark-blue">Current Weight</label>
         <input
@@ -136,24 +137,6 @@
         <label for="inches" class="mb-1 text-sm text-at-dark-blue">In.</label>     
       </div>
 
-
-   <div class="flex-1 space-y-1">
-          <label for="activityLevel" class="mb-1 text-md text-at-dark-blue">Level of Activity?</label>
-          <br>
-          <select
-            id="activityLevel"
-            class="p-2 text-gray-500 focus:outline-none"
-            required
-            v-model="activityLevel"
-          >
-            
-            <option value="lvlzero"> Exercise Less Than 1 Time a Week</option>
-            <option value="lvlone">Exercise 1-3 Times a Week</option>
-            <option value="lvltwo">Exercise 3-5 Times a Week</option>
-            <option value="lvlthree">Exercise 6-7 Times a Week</option>
-          </select>
-
-        </div>
       
       <div class="flex space-x-10">
           <div class="inline-block flex flex-col mb-1">
@@ -176,7 +159,23 @@
           </div>
         </div>
       </div>
+      <div class="flex-1 space-y-1">
+          <label for="activityLevel" class="mb-1 text-md text-at-dark-blue">Weekly Level of Activity?</label>
+          <br>
+          <select
+            id="activityLevel"
+            class="p-2 text-gray-500 focus:outline-none"
+            required
+            v-model="activityLevel"
+          >
+            
+            <option value="Little or no Exercise">Little or no Exercise</option>
+            <option value="30 Minutes moderate of training, 1 to 3 days">30 Minutes of moderate training, 1 to 3 days</option>
+            <option value="Moderate 45 minutes of training, 3 to 5 days">45 minutes of moderate training, 3 to 5 days</option>
+            <option value="1 hour of training, 6 to 7 days">1 hour of moderate training, 6 to 7 days</option>
+          </select>
 
+        </div>
       <button
       @click="createMetrics"
         type="submit"
@@ -195,6 +194,7 @@
 
 import { ref } from "vue";
 import { supabase } from "../supabase/init";
+import { useRouter } from "vue-router";
 export default {
   name: "usermetrics",
   setup() {
@@ -214,6 +214,7 @@ export default {
     const isEmpty = ref(null)
     const notEmpty = ref(null)
     const data = ref(null)
+    const router = useRouter();
     let activityAug = ""
 
     // Get Bio Metrics
@@ -230,20 +231,8 @@ export default {
           isEmpty.value=true
           
         }else{
-          notEmpty.value = true
-        //   console.log('here')
-        //   if (data.value.activityLevel === "lvlzero"){
-        //     document.getElementById('bold').innerHTML = "Exercises less then once a week"
-        //   }
-        //   else if (data.value.activityLevel === "lvlone"){
-        //     document.getElementById('bold').innerHTML= "Exercises 1-3 times a week"
-        //   }
-        //   else if (data.value.activityLevel === "lvltwo"){
-        //     document.getElementById('bold').innerHTML = "Exercises 3-5 times a week"
-        //   }
-        //   else{
-        //     document.getElementById('bold').innerHTML = "Exercises 6-7 times a week"
-        // }
+        notEmpty.value = true
+        
       }
       } catch (error) {
         
@@ -297,11 +286,8 @@ export default {
           },
         ]);
         if (error) throw error;
-        statusMsg.value = "Metrics Submitted";
-        activityLevel.value = "lvlzero";
-        setTimeout(() => {
-          statusMsg.value = false;
-        }, 5000);
+
+        router.push({ name: "restrictions" });
         //window.location.reload()
       } catch (error) {
         errorMsg.value = `Error: ${error.message}`;

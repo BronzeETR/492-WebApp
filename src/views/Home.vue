@@ -2,14 +2,29 @@
   <div v-if="dataLoaded" class="container mt-10 px-4">
     <!-- No Data -->
     <div v-if="data.length === 0" class="w-full flex flex-col items-center">
-      <h1 class="text-2xl">Log in or Create Workout</h1>
+      <h1 class="text-2xl text-at-dark-blue">Welcome To Our Fitness Planner!</h1>
+      <h1 class="text-2xl text-at-dark-blue">You Can:</h1>
+      <br>
+      <h1 class="text-xl text-at-dark-blue">Get Calorie Guidance</h1>
+      <router-link
+        class="mt-6 py-2 px-6 rounded-sm  text-sm
+      text-white bg-at-dark-blue duration-200 border-solid
+      border-2 border-transparent hover:border-at-dark-blue hover:bg-white
+      hover:text-at-dark-blue"
+        :to="{ name: 'UserMetrics' }"
+        >Enter Metrics</router-link
+      >
+      <br>
+      <h1 class="text-2xl text-at-dark-blue">or</h1>
+      <br>
+      <h1 class="text-xl text-at-dark-blue">Plan Workout</h1>
       <router-link
         class="mt-6 py-2 px-6 rounded-sm  text-sm
       text-white bg-at-dark-blue duration-200 border-solid
       border-2 border-transparent hover:border-at-dark-blue hover:bg-white
       hover:text-at-dark-blue"
         :to="{ name: 'Create' }"
-        >Create Workout</router-link
+        >Plan Workouts</router-link
       >
     </div>
 

@@ -125,13 +125,13 @@ export default {
       let maintain = 0
 
 
-      if (data.value.activityLevel === "lvlzero"){
+      if (data.value.activityLevel === "Little or no Exercise"){
         activityAug = 1.200
       }
-      else if (data.value.activityLevel === "lvlone"){
+      else if (data.value.activityLevel === "30 Minutes moderate of training, 1 to 3 days"){
         activityAug = 1.375
       }
-      else if (data.value.activityLevel === "lvltwo"){
+      else if (data.value.activityLevel === "Moderate 45 minutes of training, 3 to 5 days"){
         activityAug = 1.550
       }
       else{
